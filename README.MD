@@ -10,4 +10,4 @@
 
 #### images interpreting results
 
-#### multiple rolls of same time
+#### multiple rolls of same time, very kinky
