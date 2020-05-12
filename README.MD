@@ -6,6 +6,8 @@
 
 ### features backlogs
 
+#### coloring text for rolls results marking red as neg crits, green for pass, purple for crit success
+
 #### images interpreting results
 
 #### multiple rolls of same time
