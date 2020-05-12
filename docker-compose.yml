@@ -1,0 +1,8 @@
+version: "3.2"
+services:
+  dice_roller:
+    build: .
+    image: dice-roller-gcc:latest
+    command: python bot_example.py
+    volumes:
+      - .:/code
