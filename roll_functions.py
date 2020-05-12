@@ -38,9 +38,27 @@ def roll_n_dices(number_dices, type_dice):
     return mylist
 
 def interpret_inp(inp):
-    fgroup = inp.split('d')
-    num_dices = int(fgroup[0].strip())
-    type_dif = fgroup[1].split('>')
-    dif = int(type_dif[1].strip())
-    type_dice = int(type_dif[0].strip())
+    
+    num_dices = get_num_dices(inp)
+    dif = get_difficulty(inp)
+    type_dice = get_type_dices(inp)
+
     return {'num_dices' : num_dices, 'type_dice': type_dice, 'dif': dif}
+
+def get_num_dices(inp):
+    fgroup = inp.split('d')
+    return int(fgroup[0].strip())
+
+def get_type_dices(inp):
+    fgroup = inp.split('d')
+    try: 
+        return int(fgroup[1][0:2])
+    except:
+        return int(fgroup[1][0:1])
+
+def get_difficulty(inp):
+    try:
+        return int(inp.split('>')[1].strip())
+    except:
+        return 0
+    

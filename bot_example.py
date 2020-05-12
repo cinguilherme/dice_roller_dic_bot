@@ -22,13 +22,11 @@ async def on_ready():
     print("The bot is ready to go.")
 
 
-@client.command(aliases=['.ra', 'ra', 'ratack', './r_atack'])
-async def roll_atack(ctx, *, dice_pars):
+@client.command(aliases=['.rd', 'rd', 'rdam', 'r_damage', 'r_dano'])
+async def roll_damage(ctx, *, dice_pars):
 
     latency = my_latency()
-
     number_dices, type_dice, dificulty = roll_functions.interpret_inp(dice_pars).values()
-
     all_dices,success, crit_success, crit_failures = roll_functions.build_results(number_dices, type_dice, dificulty).values()
     
     await basic_dice_roll_print(ctx, latency, all_dices)
@@ -38,13 +36,11 @@ async def roll_atack(ctx, *, dice_pars):
     await ctx.send(f'your final results of successwith expecialization {len(success)+len(crit_success)} ')
 
 
-@client.command(aliases=['.r', 'r', './r'])
+@client.command(aliases=['.r', 'r', './r', 'r_acerto', 'r_hit'])
 async def roll(ctx, *, dice_pars):
 
     latency = my_latency()
-
     number_dices, type_dice, dificulty = roll_functions.interpret_inp(dice_pars).values()
-
     all_dices,success, crit_success, crit_failures = roll_functions.build_results(number_dices, type_dice, dificulty).values()
 
     await basic_dice_roll_print(ctx, latency, all_dices)
@@ -58,6 +54,18 @@ async def roll(ctx, *, dice_pars):
     await ctx.send(f'your final results of success is {len(success) - len(crit_failures)}')
     await ctx.send(f'your final results of successwith expecialization {success_calc}')
 
+@client.command(aliases=['.rs', 'rs', './rs', 'rolagem_atributo', 'stats_roll'])
+async def roll_without_least(ctx, *, dice_pars):
+
+    latency = my_latency()
+    number_dices, type_dice, dificulty = roll_functions.interpret_inp(dice_pars).values()
+    all_dices,success, crit_success, crit_failures = roll_functions.build_results(number_dices, type_dice, dificulty).values()
+
+    all_dices.sort()
+    minus_least = all_dices[1::]
+    
+    await ctx.send(f"here is your dice roll results! {all_dices}")
+    await ctx.send(f"here is without the least value! {minus_least}")
 
 async def basic_dice_roll_print(ctx, latency, all_dices):
     await ctx.send(f'ok! {latency}ms {latency_commented(latency)}')
