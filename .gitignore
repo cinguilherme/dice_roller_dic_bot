@@ -2,3 +2,4 @@ my_key.txt
 __pycache__
 .pytest_cache
 .coverage
+bot_disc_venv
