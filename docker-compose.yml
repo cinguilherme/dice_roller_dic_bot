@@ -4,13 +4,19 @@ services:
     build: .
     image: dice-roller-gcc:latest
     command: python app/app.py
+    volumes: 
+      - ./:/app
 
   tests:
     build: .
     image: dice-roller-gcc:latest
     command: bash -c "pytest --cov=."
+    volumes: 
+      - ./:/app
 
   pytest:
     build: .
     image: dice-roller-gcc:latest
     command: bash -c "pytest"
+    volumes: 
+      - ./:/app
