@@ -1,6 +1,5 @@
 import random
 
-
 def critical_balance(success, crit_success, crit_failures):
     sucess_without_crit = len(success) - len(crit_success)
     crits_balance = len(crit_success) - len(crit_failures)
@@ -65,11 +64,13 @@ def get_num_dices(inp):
 
 
 def get_type_dices(inp):
-    fgroup = inp.split('d')
-    try:
-        return int(fgroup[1][0:2])
-    except:
-        return int(fgroup[1][0:1])
+    if inp.find('d') != -1:
+        fgroup = inp.split('d')
+        try:
+            return int(fgroup[1][0:2])
+        except:
+            return int(fgroup[1][0:1])
+    return 0
 
 
 def get_fix(inp):

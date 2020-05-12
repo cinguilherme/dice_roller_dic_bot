@@ -2,10 +2,13 @@ build:
 	docker build . -t dice-roller-gcc:latest
 
 run:
-	docker run dice-roller:latest
+	docker-compose run dice_roller
 
-run_local:
-	python3 bot_example.py
+test:
+	docker-compose run tests
 
-test_local:
-	pytest
+create-virtual-env:
+	python3 -m venv bot_disc_venv
+
+activate-virtual-env:
+	source bot_disc_venv/bin/activate

@@ -1,8 +1,16 @@
-version: "3.2"
+version: "3.4"
 services:
   dice_roller:
     build: .
     image: dice-roller-gcc:latest
-    command: python bot_example.py
-    volumes:
-      - .:/code
+    command: python app/app.py
+
+  tests:
+    build: .
+    image: dice-roller-gcc:latest
+    command: bash -c "pytest --cov=."
+
+  pytest:
+    build: .
+    image: dice-roller-gcc:latest
+    command: bash -c "pytest"
