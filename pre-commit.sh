@@ -1,4 +1,7 @@
 #!/bin/sh
 
-echo "docker-compose run tests"
+echo "pre-commit run"
+
+docker-compose run tests
+
 exit $?
