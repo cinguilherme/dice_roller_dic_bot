@@ -67,6 +67,15 @@ async def roll_without_least(ctx, *, dice_pars):
     await ctx.send(f"here is your dice roll results! {all_dices}")
     await ctx.send(f"here is without the least value! {minus_least}")
 
+@client.command(aliases=['.rfx', 'rfx', './rfx', 'rolagem_fixo'])
+async def roll_plus_fix(ctx, *, dice_pars):
+
+    latency = my_latency()
+    number_dices, type_dice, fix = roll_functions.interpre_plus_fix(dice_pars).values()
+    dices = roll_functions.roll_n_dices(number_dices, type_dice)
+    
+    await ctx.send(f"here is your dice roll results! {dices} + {fix} => {sum(dices)+fix}")
+
 async def basic_dice_roll_print(ctx, latency, all_dices):
     await ctx.send(f'ok! {latency}ms {latency_commented(latency)}')
     await ctx.send(f"here is your dice roll results! {all_dices}")

@@ -38,12 +38,17 @@ def roll_n_dices(number_dices, type_dice):
     return mylist
 
 def interpret_inp(inp):
-    
     num_dices = get_num_dices(inp)
     dif = get_difficulty(inp)
     type_dice = get_type_dices(inp)
 
     return {'num_dices' : num_dices, 'type_dice': type_dice, 'dif': dif}
+
+def interpre_plus_fix(inp):
+    num_dices = get_num_dices(inp)
+    type_dice = get_type_dices(inp)
+    fix = get_fix(inp)
+    return {'num_dices' : num_dices, 'type_dice': type_dice, 'fix': fix}
 
 def get_num_dices(inp):
     fgroup = inp.split('d')
@@ -55,6 +60,12 @@ def get_type_dices(inp):
         return int(fgroup[1][0:2])
     except:
         return int(fgroup[1][0:1])
+
+def get_fix(inp):
+    try:
+        return int((inp.split('+'))[1].strip())
+    except:
+        return 0
 
 def get_difficulty(inp):
     try:
