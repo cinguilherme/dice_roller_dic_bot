@@ -1,6 +1,6 @@
 import pytest
 from unittest import TestCase
-import roll_functions
+from roll_functions import roll_functions
 
 
 class RollFunctionsTest(TestCase):
