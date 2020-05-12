@@ -1,7 +1,8 @@
 import discord
 import random
 
-from roll_functions import roll_functions
+from dice_commands.roll_functions import roll_functions
+from dice_commands.classic_roll import classic_roll
 
 from discord.ext import commands
 
@@ -28,39 +29,16 @@ async def on_ready():
 @client.command(aliases=['.rd', 'rd', 'rdam', 'r_damage', 'r_dano'])
 async def roll_damage(ctx, *, dice_pars):
 
-    latency = my_latency()
-    number_dices, type_dice, dificulty = roll_functions.interpret_inp(
-        dice_pars).values()
-    all_dices, success, crit_success, crit_failures = roll_functions.build_results(
-        number_dices, type_dice, dificulty).values()
-
-    await basic_dice_roll_print(ctx, latency, all_dices)
-
-    await ctx.send(f'for the dificulty of {dificulty}, you had {len(success)} success {success}')
-    await ctx.send(f'your final results of success is {len(success)}')
-    await ctx.send(f'your final results of successwith expecialization {len(success)+len(crit_success)} ')
+    messages = classic_roll.roll_damage(dice_pars, roll_functions)
+    
+    await ctx.send(messages)
 
 
 @client.command(aliases=['.r', 'r', './r', 'r_acerto', 'r_hit'])
 async def roll(ctx, *, dice_pars):
 
-    latency = my_latency()
-    number_dices, type_dice, dificulty = roll_functions.interpret_inp(
-        dice_pars).values()
-    all_dices, success, crit_success, crit_failures = roll_functions.build_results(
-        number_dices, type_dice, dificulty).values()
-
-    await basic_dice_roll_print(ctx, latency, all_dices)
-
-    await ctx.send(f'for the dificulty of {dificulty}, you had {len(success)} success {success}')
-    await ctx.send(f'you had {len(crit_failures)} critical failures {crit_failures}')
-    await ctx.send(f'you had {len(crit_success)} critical success {crit_success}')
-
-    success_calc = roll_functions.critical_balance(
-        success, crit_success, crit_failures)
-
-    await ctx.send(f'your final results of success is {len(success) - len(crit_failures)}')
-    await ctx.send(f'your final results of successwith expecialization {success_calc}')
+    message = classic_roll.roll_dices(dice_pars, roll_functions)
+    await ctx.send(message)
 
 
 @client.command(aliases=['.rs', 'rs', './rs', 'rolagem_atributo', 'stats_roll'])

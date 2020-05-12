@@ -4,5 +4,5 @@ build:
 run:
 	docker-compose run dice_roller
 
-test_local:
+test:
 	docker-compose run tests
