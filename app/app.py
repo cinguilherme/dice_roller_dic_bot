@@ -31,14 +31,23 @@ async def roll_damage(ctx, *, dice_pars):
 
     messages = classic_roll.roll_damage(dice_pars, roll_functions)
     
-    await ctx.send(messages)
+    retStr = str("""```diff\n""") + messages + """ ```"""
+    embed = discord.Embed(title="Dice rolls")
+    embed.add_field(name="results", value=retStr)
+
+    await ctx.send(embed=embed)
 
 
 @client.command(aliases=['.r', 'r', './r', 'r_acerto', 'r_hit'])
 async def roll(ctx, *, dice_pars):
 
     message = classic_roll.roll_dices(dice_pars, roll_functions)
-    await ctx.send(message)
+
+    retStr = str("""```diff\n""") + message + """ ```"""
+    embed = discord.Embed(title="Dice rolls")
+    embed.add_field(name="results", value=retStr)
+
+    await ctx.send(embed=embed)
 
 
 @client.command(aliases=['.rs', 'rs', './rs', 'rolagem_atributo', 'stats_roll'])

@@ -23,24 +23,24 @@ def roll_dices(dices, roll_functions):
 def build_messages_of_atack(all_dices, success, crit_success, dificulty):
 
     message_list = build_messages_init(all_dices, dificulty, success)
-    message_list.append(f'your final results of success is {len(success)}')
-    message_list.append(f'your final results of successwith expecialization {len(success)+len(crit_success)} ')
+    message_list.append(f'  results of success is {len(success)}')
+    message_list.append(f'+ results of successwith expecialization {len(success)+len(crit_success)} ')
     return "\n".join(message_list)
 
 
 def build_messages_str(all_dices, success, crit_success, crit_failures, success_calc, dificulty):
 
     message_list = build_messages_init(all_dices, dificulty, success)
-    message_list.append(f'you had {len(crit_failures)} critical failures {crit_failures}')
-    message_list.append(f'you had {len(crit_success)} critical success {crit_success}')
-    message_list.append(f'your final results of success is {len(success) - len(crit_failures)}')
-    message_list.append(f'your final results of successwith expecialization {success_calc}')
+    message_list.append(f'- you had {len(crit_failures)} critical failures - {crit_failures}')
+    message_list.append(f'+ you had {len(crit_success)} critical success {crit_success}')
+    message_list.append(f'  results of success is {len(success) + len(crit_failures)}')
+    message_list.append(f'+ results of successwith expecialization {success_calc}')
     return "\n".join(message_list)
 
 
 def build_messages_init(all_dices, dificulty, success):
     message_list = []
     message_list.append(f'ok, rolling your dices!')
-    message_list.append(f"here is your dice roll results! {all_dices}")
-    message_list.append(f'for the dificulty of {dificulty}, you had {len(success)} success {success}')
+    message_list.append(f"dices roll results! {all_dices}")
+    message_list.append(f'dificulty of {dificulty}, you had {len(success)} success + {success}')
     return message_list
