@@ -6,3 +6,6 @@ run:
 
 run_local:
 	python3 bot_example.py
+
+test_local:
+	pytest
