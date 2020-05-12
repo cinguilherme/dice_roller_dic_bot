@@ -1,4 +1,4 @@
-## This is a Discord bot to provide dices rolling commands ##
+## This is a Discord bot to provide dices rolling commands built using python 3
 
 ### primarly functions will target rolling a n number of dices of a given type against a dificuty check
 
