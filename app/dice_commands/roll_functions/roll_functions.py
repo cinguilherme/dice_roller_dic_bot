@@ -1,6 +1,5 @@
 import random
 
-
 def critical_balance(success, crit_success, crit_failures):
     sucess_without_crit = len(success) - len(crit_success)
     crits_balance = len(crit_success) - len(crit_failures)

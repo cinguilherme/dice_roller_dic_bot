@@ -30,7 +30,7 @@ async def on_ready():
 async def roll_damage(ctx, *, dice_pars):
 
     messages = classic_roll.roll_damage(dice_pars, roll_functions)
-    
+
     retStr = str("""```diff\n""") + messages + """ ```"""
     embed = discord.Embed(title="Dice rolls")
     embed.add_field(name="results", value=retStr)
