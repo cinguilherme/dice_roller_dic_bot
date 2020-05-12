@@ -1,3 +1,5 @@
 discord.py
 flake8
 pytest
+coverage
+pytest-cov

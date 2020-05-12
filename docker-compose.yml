@@ -4,5 +4,8 @@ services:
     build: .
     image: dice-roller-gcc:latest
     command: python bot_example.py
-    volumes:
-      - .:/code
+
+  tests:
+    build: .
+    image: dice-roller-gcc:latest
+    command: bash -c "pytest"

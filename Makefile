@@ -2,10 +2,7 @@ build:
 	docker build . -t dice-roller-gcc:latest
 
 run:
-	docker run dice-roller:latest
-
-run_local:
-	python3 bot_example.py
+	docker-compose run dice_roller
 
 test_local:
-	pytest
+	docker-compose run tests
