@@ -39,6 +39,10 @@ class TestGetNumberOfDices(TestCase):
         dif = roll_functions.get_num_dices('10d10>10')
         assert(dif == 10)
 
+    def test_with_complete_input_12(self):
+        dif = roll_functions.get_num_dices('12d10>10')
+        assert(dif == 12)
+
     def test_with_missing_type(self):
         dif = roll_functions.get_num_dices('10')
         assert(dif == 10)
