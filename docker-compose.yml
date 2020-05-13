@@ -10,13 +10,6 @@ services:
   tests:
     build: .
     image: dice-roller-gcc:latest
-    command: bash -c "pytest --cov=."
-    volumes: 
-      - ./:/app
-
-  pytest:
-    build: .
-    image: dice-roller-gcc:latest
-    command: bash -c "pytest"
+    command: bash -c "pytest --cov=. --disable-warnings "
     volumes: 
       - ./:/app
