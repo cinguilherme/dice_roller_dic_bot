@@ -11,15 +11,18 @@ def critical_balance(success, crit_success, crit_failures):
 
 
 def build_results(number_dices, type_dice, dificulty):
-    arr_of_dices = roll_n_dices(number_dices, type_dice)
-    suc_arr = success_arr(arr_of_dices, dificulty)
-    crit_failure_arr = crit_failures(arr_of_dices)
-    crit_suc = crit_success(arr_of_dices, type_dice)
+    
+    all_dices = roll_n_dices(number_dices, type_dice)
+    successes = success_checks(all_dices, dificulty)
+    crit_failures = crit_failures(all_dices)
+    crits = crit_success(all_dices, type_dice)
+    
     results = {
-        'all_dices': arr_of_dices,
-        'success': suc_arr,
-        'crit_success': crit_suc,
-        'crit_failures': crit_failure_arr}
+        'all_dices': all_dices,
+        'success': successes,
+        'crit_success': crits,
+        'crit_failures': crit_failures}
+    
     return results
 
 
@@ -31,8 +34,10 @@ def crit_success(arr, type_dice):
     return list(filter(lambda x: x == type_dice, arr))
 
 
-def success_arr(results, diff):
-    return list(filter(lambda x: x >= diff, results))
+def success_checks(results, difficulty_check, abouveOnly=True):
+    if abouveOnly:
+        return list(filter(lambda x: x > difficulty_check, results))    
+    return list(filter(lambda x: x >= difficulty_check, results))
 
 
 def roll_n_dices(number_dices, type_dice):
