@@ -82,12 +82,10 @@ def get_fix(inp):
 
 def get_difficulty(inp):
     try:
-        print('dif')
         rest = inp.split('>')[1].strip()
         x = 0
         for c in rest:
             if c.isnumeric():
-                print(c)
                 x += 1
             else:
                 break
