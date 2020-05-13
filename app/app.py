@@ -31,21 +31,17 @@ async def roll_damage(ctx, *, dice_pars):
 
     messages = classic_roll.roll_damage(dice_pars, roll_functions)
 
-    retStr = str("""```diff\n""") + messages + """ ```"""
-    embed = discord.Embed(title="Dice rolls")
-    embed.add_field(name="results", value=retStr)
-
+    embed = make_embed(messages)
+    
     await ctx.send(embed=embed)
 
 
 @client.command(aliases=['.r', 'r', './r', 'r_acerto', 'r_hit'])
 async def roll(ctx, *, dice_pars):
 
-    message = classic_roll.roll_dices(dice_pars, roll_functions)
+    messages = classic_roll.roll_dices(dice_pars, roll_functions)
 
-    retStr = str("""```diff\n""") + message + """ ```"""
-    embed = discord.Embed(title="Dice rolls")
-    embed.add_field(name="results", value=retStr)
+    embed = make_embed(messages)
 
     await ctx.send(embed=embed)
 
@@ -81,6 +77,28 @@ async def basic_dice_roll_print(ctx, latency, all_dices):
     await ctx.send(f'ok! {latency}ms {latency_commented(latency)}')
     await ctx.send(f"here is your dice roll results! {all_dices}")
 
+
+def make_embed(messages):
+    retStr = str("""```diff\n""") + messages + """ ```"""
+    
+    embed = discord.Embed(
+        title="Dice rolls", 
+        description='',
+        colour=discord.Color.dark_blue(),
+        type='rich')
+    
+    embed.set_footer(text='Dice roller footer')
+    embed.set_image(url='')
+    embed.set_thumbnail(url='')
+    embed.set_author(name='cinguilherme', icon_url='')
+
+    embed.add_field(name='general', value='general', inline=False)
+    embed.add_field(name='sucesses', value='sss', inline=False)
+    embed.add_field(name='failures', value='fff', inline=False)
+
+    embed.add_field(name="results", value=retStr)
+
+    return embed
 
 with open('my_key.txt', 'r') as file:
     data = file.read().replace('\n', '')
