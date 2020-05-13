@@ -8,7 +8,7 @@ test:
 	docker-compose run tests
 
 create-virtual-env:
-	python3 -m venv bot_disc_venv
+	python -m venv bot_disc_venv
 
 activate-virtual-env:
 	source bot_disc_venv/bin/activate

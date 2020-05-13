@@ -4,7 +4,7 @@ import random
 from dice_commands.roll_functions import roll_functions
 from dice_commands.classic_roll import classic_roll
 
-from discord_embed_creator import make_embed_messages_by_type
+from discord_embed_creator import build_embed_discord_message
 
 from discord.ext import commands
 
@@ -22,7 +22,7 @@ async def roll_damage(ctx, *, dice_pars):
 
     messages = classic_roll.roll_damage(dice_pars, roll_functions)
 
-    embed = make_embed_messages_by_type(*messages.values())
+    embed = build_embed_discord_message(*messages.values())
 
     await ctx.send(embed=embed)
 
@@ -32,7 +32,7 @@ async def roll(ctx, *, dice_pars):
 
     messages = classic_roll.roll_dices(dice_pars, roll_functions)
     
-    embed = make_embed_messages_by_type(*messages.values())
+    embed = build_embed_discord_message(*messages.values())
 
     await ctx.send(embed=embed)
 
@@ -61,10 +61,6 @@ async def roll_plus_fix(ctx, *, dice_pars):
 
     await ctx.send(f"here is your dice roll results! {dices} + {fix} => {sum(dices)+fix}")
 
-
-async def basic_dice_roll_print(ctx, latency, all_dices):
-    await ctx.send(f'ok! {latency}ms {latency_commented(latency)}')
-    await ctx.send(f"here is your dice roll results! {all_dices}")
 
 with open('my_key.txt', 'r') as file:
     data = file.read().replace('\n', '')
