@@ -48,7 +48,7 @@ class TestGetNumberOfDices(TestCase):
         dif = roll_functions.get_num_dices('10')
         assert(dif == 10)
 
-class TestBuildResults(TestCase):
+class TestResultsInterpretation(TestCase):
     
     def test_simple_success_checks(self):
         result = roll_functions.success_checks([4,5,6], 6)
@@ -75,3 +75,15 @@ class TestBuildResults(TestCase):
         assert(success == [7,9,10])
         assert(crits == [10])
         assert(neg_crit == [1])
+
+class TestCritBalance(TestCase):
+    
+    def test_crit_balance_calculation(self):
+        
+        check = roll_functions.critical_balance(success=[9,10], crit_success=[10], crit_failures=[1])
+        assert(check == 1)
+        check = roll_functions.critical_balance(success=[9,10,10], crit_success=[10,10], crit_failures=[1])
+        assert(check == 3)
+        check = roll_functions.critical_balance(success=[9,9], crit_success=[], crit_failures=[1])
+        assert(check == 1)
+
