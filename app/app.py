@@ -1,3 +1,4 @@
+import os
 import discord
 import random
 
@@ -17,24 +18,22 @@ async def on_ready():
     print("The bot is ready to go.")
 
 
-@client.command(aliases=['.rd', 'rd', 'rdam', 'r_damage', 'r_dano'])
-async def roll_damage(ctx, *, dice_pars):
-
-    messages = classic_roll.roll_damage(dice_pars, roll_functions)
-
-    embed = build_embed_discord_message(*messages.values())
-
-    await ctx.send(embed=embed)
+@client.command()
+async def load(ctx, extension):
+    client.load_extension(f'cogs.{extension}')
+    await ctx.send(f'loading extension {extension}')
 
 
-@client.command(aliases=['.r', 'r', './r', 'r_acerto', 'r_hit'])
-async def roll(ctx, *, dice_pars):
+@client.command()
+async def unload(ctx, extension):
+    client.unload_extension(f'cogs.{extension}')
+    await ctx.send(f'unloading extension {extension}')
 
-    messages = classic_roll.roll_dices(dice_pars, roll_functions)
-    
-    embed = build_embed_discord_message(*messages.values())
 
-    await ctx.send(embed=embed)
+@client.command()
+async def reload(ctx, ext):
+    await unload(ctx, ext)
+    await load(ctx, ext)
 
 
 @client.command(aliases=['.rs', 'rs', './rs', 'rolagem_atributo', 'stats_roll'])
@@ -62,6 +61,16 @@ async def roll_plus_fix(ctx, *, dice_pars):
     await ctx.send(f"here is your dice roll results! {dices} + {fix} => {sum(dices)+fix}")
 
 
+def load_cogs_startup():
+    # preload my cogs at start
+    for filename in os.listdir('./app/cogs'):
+        if filename.endswith('.py'):
+            client.load_extension(f'cogs.{filename[:-3]}')
+
+
+load_cogs_startup()
+
+# start the bot with the key in the textfile
 with open('my_key.txt', 'r') as file:
     data = file.read().replace('\n', '')
     client.run(data)
