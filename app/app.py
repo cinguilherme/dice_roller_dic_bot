@@ -4,6 +4,8 @@ import random
 from dice_commands.roll_functions import roll_functions
 from dice_commands.classic_roll import classic_roll
 
+from discord_embed_creator import make_embed_messages_by_type
+
 from discord.ext import commands
 
 
@@ -19,9 +21,8 @@ async def on_ready():
 async def roll_damage(ctx, *, dice_pars):
 
     messages = classic_roll.roll_damage(dice_pars, roll_functions)
-    general, success, success_crit = messages.values()
 
-    embed = make_embed_messages_by_type(general=general, sucess=success, crits=success_crit)
+    embed = make_embed_messages_by_type(*messages.values())
 
     await ctx.send(embed=embed)
 
@@ -30,9 +31,8 @@ async def roll_damage(ctx, *, dice_pars):
 async def roll(ctx, *, dice_pars):
 
     messages = classic_roll.roll_dices(dice_pars, roll_functions)
-    general, success, crits, fails, balance, dificulty = messages.values()
     
-    embed = make_embed_messages_by_type(general, success, crits, fails, balance)
+    embed = make_embed_messages_by_type(*messages.values())
 
     await ctx.send(embed=embed)
 
@@ -65,54 +65,6 @@ async def roll_plus_fix(ctx, *, dice_pars):
 async def basic_dice_roll_print(ctx, latency, all_dices):
     await ctx.send(f'ok! {latency}ms {latency_commented(latency)}')
     await ctx.send(f"here is your dice roll results! {all_dices}")
-
-
-def make_embed_zip_messages(messages):
-    retStr = str("""```diff\n""") + messages + """ ```"""
-    
-    embed = create_base_embed()
-
-    embed.add_field(name='general', value='general', inline=False)
-    embed.add_field(name='sucesses', value='sss', inline=False)
-    embed.add_field(name='failures', value='fff', inline=False)
-
-    embed.add_field(name="results", value=retStr)
-
-    return embed
-
-def make_embed_messages_by_type(general, sucess, crits, crit_failures='', balance='', bot=False):
-    
-    embed = create_base_embed()
-
-    general_str = str("""```diff\n""") + general + """ ```"""
-    embed.add_field(name='general', value=general_str, inline=False)
-    
-    sucess_str = str("""```diff\n+""") + sucess + """ ```"""
-    embed.add_field(name='sucesses', value=sucess_str, inline=False)
-    
-    crits_str = str("""```diff\n+""") + crits + """ ```"""
-    embed.add_field(name='critical', value=crits_str, inline=False)
-
-    if '' != crit_failures:
-        crit_failures_str = str("""```diff\n-""") + crit_failures + """ ```"""
-        embed.add_field(name='critical failures', value=crit_failures_str, inline=False)
-
-    return embed
-
-
-def create_base_embed():
-    embed = discord.Embed(
-        title="Dices results", 
-        description='results from rolls',
-        colour=discord.Color.dark_blue(),
-        type='rich')
-    
-    embed.set_footer(text='Dice roller footer')
-    embed.set_image(url='')
-    embed.set_thumbnail(url='')
-    embed.set_author(name='Dice Roller bot', icon_url='')
-    return embed
-
 
 with open('my_key.txt', 'r') as file:
     data = file.read().replace('\n', '')
