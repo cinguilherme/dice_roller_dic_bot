@@ -1,37 +1,45 @@
 import discord
 
-def make_embed_zip_messages(messages):
-    retStr = str("""```diff\n""") + messages + """ ```"""
+def build_embed_discord_message(general, sucess, crits, crit_failures='', balance='', bot=False):
     
     embed = create_base_embed()
 
-    embed.add_field(name='general', value='general', inline=False)
-    embed.add_field(name='sucesses', value='sss', inline=False)
-    embed.add_field(name='failures', value='fff', inline=False)
-
-    embed.add_field(name="results", value=retStr)
-
-    return embed
-
-def make_embed_messages_by_type(general, sucess, crits, crit_failures='', balance='', bot=False):
-    
-    embed = create_base_embed()
-
-    general_str = str("""```diff\n""") + general + """ ```"""
+    general_str = general_information(general)
     embed.add_field(name='general', value=general_str, inline=False)
     
-    sucess_str = str("""```diff\n+""") + sucess + """ ```"""
-    embed.add_field(name='sucesses', value=sucess_str, inline=False)
-    
-    crits_str = str("""```diff\n+""") + crits + """ ```"""
-    embed.add_field(name='critical', value=crits_str, inline=False)
+    # either all success or the balanced
+    if bot:
+        sucess_str = success_general(sucess)
+        embed.add_field(name='success', value=sucess_str)
+    else:
+        balance_str = balance_success_information(balance)
+        embed.add_field(name='success', value=balance_str)
 
+    crits_str = critical_hits_information(crits)
+    embed.add_field(name='critical hits', value=crits_str, inline=False)
+
+    # display negative crits if any
     if '' != crit_failures:
-        crit_failures_str = str("""```diff\n-""") + crit_failures + """ ```"""
+        crit_failures_str = negative_crits_information(crit_failures)
         embed.add_field(name='critical failures', value=crit_failures_str, inline=False)
 
     return embed
 
+def general_information(general):
+    return str("""```yaml\n""") + general + """ ```"""
+
+def success_general(success):
+    return str("""```diff\n+""") + success + """ ```"""
+
+def balance_success_information(balance):
+    return str("""```diff\n+""") + balance + """ ```"""
+
+def negative_crits_information(negative_crits):
+    return str("""```diff\n-""") + negative_crits + """ ```"""
+
+def critical_hits_information(crits):
+    return str("""```diff\n+""") + crits + """ ```"""
+    
 
 def create_base_embed():
     embed = discord.Embed(
