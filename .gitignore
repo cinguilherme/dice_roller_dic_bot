@@ -3,3 +3,4 @@ __pycache__
 .pytest_cache
 .coverage
 bot_disc_venv
+.vscode
