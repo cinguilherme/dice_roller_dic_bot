@@ -1,14 +1,12 @@
 import os
-import discord
 import random
 
-from dice_commands.roll_functions import roll_functions
-from dice_commands.classic_roll import classic_roll
-
-from discord_embed_creator import build_embed_discord_message
-
+import discord
 from discord.ext import commands
 
+from dice_commands.classic_roll import classic_roll
+from dice_commands.roll_functions import roll_functions
+from discord_embed_creator import build_embed_discord_message
 
 client = commands.Bot(command_prefix='.')
 
