@@ -17,7 +17,6 @@ class Classic(commands.Cog):
 
 
     #Commands
-   
     @commands.command(aliases=['.r', 'r', './r', 'r_acerto', 'r_hit'])
     async def roll(self, ctx, *, dice_pars):
 
