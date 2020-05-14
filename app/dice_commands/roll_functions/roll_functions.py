@@ -14,14 +14,14 @@ def build_results(number_dices, type_dice, dificulty):
     
     all_dices = roll_n_dices(number_dices, type_dice)
     successes = success_checks(all_dices, dificulty)
-    crit_failures = crit_failures(all_dices)
+    crit_fails = crit_failures(all_dices)
     crits = crit_success(all_dices, type_dice)
     
     results = {
         'all_dices': all_dices,
         'success': successes,
         'crit_success': crits,
-        'crit_failures': crit_failures}
+        'crit_failures': crit_fails}
     
     return results
 
