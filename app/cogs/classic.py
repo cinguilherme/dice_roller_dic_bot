@@ -17,11 +17,7 @@ class Classic(commands.Cog):
 
 
     #Commands
-    @commands.command()
-    async def roller(self, ctx, params):
-        await ctx.send(f'ok, i got this here {params}, v2 now')
-
-
+   
     @commands.command(aliases=['.r', 'r', './r', 'r_acerto', 'r_hit'])
     async def roll(self, ctx, *, dice_pars):
 
@@ -35,9 +31,9 @@ class Classic(commands.Cog):
     @commands.command(aliases=['.rd', 'rd', 'rdam', 'r_damage', 'r_dano'])
     async def roll_damage(self, ctx, *, dice_pars):
 
-        messages = classic_roll.roll_damage(dice_pars, roll_functions)
-
-        embed = build_embed_discord_message(*messages.values())
+        general, success, crits, dif = classic_roll.roll_damage(dice_pars, roll_functions).values()
+        
+        embed = build_embed_discord_message(general=general, sucess=success, crits=crits, bot=False)
 
         await ctx.send(embed=embed)
 
