@@ -1,4 +1,4 @@
-import discord
+
 from discord.ext import commands
 
 from dice_commands.classic_roll import classic_roll
@@ -11,14 +11,25 @@ class Classic(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    # Events
+    # Events for cog ready
     @commands.Cog.listener()
     async def on_ready(self):
         print('Classic cog ready')
 
-    # Commands
+    # Event for command NOT FOUND
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+        if isinstance(error, commands.CommandNotFound):
+            await ctx.send("Srry, I dont recognize this command. "
+                           " Maybe it is on another Cog")
 
-    @commands.command(aliases=['.r', 'r', './r', 'r_acerto', 'r_hit'])
+    # Commands Roll
+    @commands.command(aliases=['.r', 'r', './r', 'r_acerto', 'r_hit'],
+                      brief=("Use as 'X d Y' or 'X d Y > z'"
+                             "like '4 d10 > 6' "),
+                      help=("The roll comand takes  'X d Y > z' format."
+                            " eg like '4 d10 > 6' and displays the results"
+                            "of the dice rolls with details "))
     async def roll(self, ctx, *, dice_pars):
 
         messages = classic_roll.roll_dices(dice_pars, roll_functions)
@@ -27,6 +38,17 @@ class Classic(commands.Cog):
 
         await ctx.send(embed=embed)
 
+    # Error handling for the ROLL command
+    @roll.error
+    async def roll_error_handler(self, ctx, error):
+
+        form = ("Srry, the roll command requires "
+                " something like '10d10 > 5' to work. Try '.help roll' "
+                "for more detailed information")
+
+        await ctx.send(form)
+
+    # Command Roll for damage
     @commands.command(aliases=['.rd', 'rd', 'rdam', 'r_damage', 'r_dano'])
     async def roll_damage(self, ctx, *, dice_pars):
 
