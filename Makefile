@@ -14,4 +14,4 @@ activate-virtual-env:
 	source bot_disc_venv/bin/activate
 
 silent-commit:
-	git add . && git commit -m "silent" && gp
+	git add . && git commit -m "silent" && git push
