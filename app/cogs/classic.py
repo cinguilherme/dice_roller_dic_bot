@@ -29,7 +29,8 @@ class Classic(commands.Cog):
                              "like '4 d10 > 6' "),
                       help=("The roll comand takes  'X d Y > z' format."
                             " eg like '4 d10 > 6' and displays the results"
-                            "of the dice rolls with details "))
+                            "of the dice rolls with details "),
+                      cog="Classic")
     async def roll(self, ctx, *, dice_pars):
 
         messages = classic_roll.roll_dices(dice_pars, roll_functions)

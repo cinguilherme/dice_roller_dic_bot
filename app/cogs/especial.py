@@ -1,0 +1,41 @@
+
+from discord.ext import commands
+
+from dice_commands.roll_functions import roll_functions
+
+
+class Especial(commands.Cog):
+
+    def __init__(self, client):
+        self.client = client
+
+    # Commands rolagem_atributo Roll
+    @commands.command(aliases=['.rs', 'rs', './rs', 'rolagem_atributo', 'stats_roll'])
+    async def roll_without_least(self, ctx, *, dice_pars):
+
+        number_dices, type_dice, dificulty = roll_functions.interpret_inp(
+            dice_pars).values()
+        all_dices, success, crit_success, crit_failures = roll_functions.build_results(
+            number_dices, type_dice, dificulty).values()
+
+        all_dices.sort()
+
+        minus_least = all_dices[1::]
+
+        await ctx.send(f"here is your dice roll results! {all_dices}")
+        await ctx.send(f"here is without the least value! {minus_least}")
+
+    # Commands rolagem_fixo Roll
+    @commands.command(aliases=['.rfx', 'rfx', './rfx', 'rolagem_fixo'])
+    async def roll_plus_fix(self, ctx, *, dice_pars):
+
+        number_dices, type_dice, fix = roll_functions.interpre_plus_fix(
+            dice_pars).values()
+
+        dices = roll_functions.roll_n_dices(number_dices, type_dice)
+
+        await ctx.send(f"here is your dice roll results! {dices} + {fix} => {sum(dices)+fix}")
+
+
+def setup(client):
+    client.add_cog(Especial(client))

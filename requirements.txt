@@ -5,3 +5,4 @@ coverage
 pytest-cov
 rope
 pep8
+distest
