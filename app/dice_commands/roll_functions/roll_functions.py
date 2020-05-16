@@ -74,7 +74,8 @@ def get_type_dices(inp):
         fgroup = inp.split('d')
         try:
             return int(fgroup[1][0:2])
-        except:
+        except Exception as e:
+            print(f'{e}, recover from dice type side')
             return int(fgroup[1][0:1])
     return 0
 
@@ -82,7 +83,8 @@ def get_type_dices(inp):
 def get_fix(inp):
     try:
         return int((inp.split('+'))[1].strip())
-    except:
+    except Exception as e:
+        print(f'{e}, unable to get fix +, use zero')
         return 0
 
 
@@ -97,5 +99,6 @@ def get_difficulty(inp):
                 break
 
         return int(rest[:x])
-    except:
-        return 0
+    except Exception as e:
+        print(f'{e} , unable to identify the dificulty check, set default')
+        return 6

@@ -12,7 +12,7 @@ from discord_embed_creator import build_embed_discord_message, \
 output_configuration = True
 
 
-def get_embed(simple_output):
+def get_embed():
     if output_configuration:
         return build_simple_embed_discord_message
     else:
