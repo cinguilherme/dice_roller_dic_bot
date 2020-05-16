@@ -1,5 +1,6 @@
 import random
 
+
 def critical_balance(success, crit_success, crit_failures):
     sucess_without_crit = len(success) - len(crit_success)
     crits_balance = len(crit_success) - len(crit_failures)
@@ -11,18 +12,18 @@ def critical_balance(success, crit_success, crit_failures):
 
 
 def build_results(number_dices, type_dice, dificulty):
-    
+
     all_dices = roll_n_dices(number_dices, type_dice)
     successes = success_checks(all_dices, dificulty)
     crit_fails = crit_failures(all_dices)
     crits = crit_success(all_dices, type_dice)
-    
+
     results = {
         'all_dices': all_dices,
         'success': successes,
         'crit_success': crits,
         'crit_failures': crit_fails}
-    
+
     return results
 
 
@@ -36,7 +37,7 @@ def crit_success(arr, type_dice):
 
 def success_checks(results, difficulty_check, abouveOnly=True):
     if abouveOnly:
-        return list(filter(lambda x: x > difficulty_check, results))    
+        return list(filter(lambda x: x > difficulty_check, results))
     return list(filter(lambda x: x >= difficulty_check, results))
 
 

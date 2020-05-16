@@ -1,6 +1,19 @@
 import discord
 
 
+def build_simple_embed_discord_message(general, simple_output, bot=False):
+    print(general, simple_output)
+    embed = create_simpler_embed()
+
+    sucess_str = general_information(general)
+    embed.add_field(name='general', value=sucess_str, inline=False)
+
+    simple = general_information(simple_output)
+    embed.add_field(name='results', value=simple, inline=False)
+
+    return embed
+
+
 def build_embed_discord_message(general, sucess, crits, crit_failures='',
                                 balance='', bot=False):
 
@@ -63,4 +76,11 @@ def create_base_embed():
     embed.set_image(url='')
     embed.set_thumbnail(url='')
     embed.set_author(name='Dice Roller bot', icon_url='')
+    return embed
+
+
+def create_simpler_embed():
+    embed = discord.Embed(
+        title="Dices results",
+        type='rich')
     return embed
