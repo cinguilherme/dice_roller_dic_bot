@@ -2,7 +2,7 @@ import discord
 
 
 def build_simple_embed_discord_message(general, simple_output, bot=False):
-    print(general, simple_output)
+
     embed = create_result_success_embed()
 
     sucess_str = neutral_text(general)

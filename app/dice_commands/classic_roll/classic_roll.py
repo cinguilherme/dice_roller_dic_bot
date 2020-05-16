@@ -44,12 +44,14 @@ def roll_dices(dices, roll_functions, simple_output=False):
         success, crit_success, crit_failures)
 
     messages_object = build_messages_of_atack(
-        all_dices, success, crit_success, crit_failures, success_calc, dificulty, simple_output)
+        all_dices, success, crit_success, crit_failures,
+        success_calc, dificulty, simple_output)
 
     return messages_object
 
 
-def build_messages_of_atack(all_dices, success, crit_success, crit_failures, success_calc, dificulty, simple_output=False):
+def build_messages_of_atack(all_dices, success, crit_success, crit_failures,
+                            success_calc, dificulty, simple_output=False):
 
     if simple_output:
         messages = {

@@ -4,18 +4,37 @@ import time
 
 from dice_commands.classic_roll.classic_roll import roll_dices, roll_damage
 from dice_commands.roll_functions import roll_functions
-from discord_embed_creator import build_embed_discord_message, build_simple_embed_discord_message
+from discord_embed_creator import build_embed_discord_message, \
+    build_simple_embed_discord_message
 
 # TODO .mr 2 * 30d4 > 1 BUG
 
 output_configuration = True
 
 
-def get_proper_embed(simple_output):
-    if simple_output:
+def get_embed(simple_output):
+    if output_configuration:
         return build_simple_embed_discord_message
     else:
         return build_embed_discord_message
+
+
+def roll_dices_ref(regular_input):
+    messages = roll_dices(
+        regular_input, roll_functions, output_configuration).values()
+
+    embed_function = get_embed()
+
+    embed = embed_function(*messages)
+    return embed
+
+
+def roll_damage_ref(regular_input):
+    messages = roll_damage(regular_input, roll_functions).values()
+
+    embed_function = get_embed()
+    embed = embed_function(*messages)
+    return embed
 
 
 class Classic(commands.Cog):
@@ -47,29 +66,26 @@ class Classic(commands.Cog):
                       cog="Classic")
     async def roll(self, ctx, *, dice_pars):
 
-        messages = roll_dices(dice_pars, roll_functions,
-                              output_configuration).values()
-
-        embed_function = get_proper_embed(output_configuration)
-        embed = embed_function(*messages)
+        embed = roll_dices_ref(dice_pars)
 
         await ctx.send(embed=embed)
 
-    # MULTIPLE ROLLS COMMAND
-    # Command Roll for damage
-    @commands.command(aliases=['mr'])
+    # COMMAND MULTIPLE ROLLS
+    @commands.command(aliases=['mr'],
+                      brief=("Use as 'N * X d Y' or 'N * X d Y > z'"
+                             "like '2 * 4 d10 > 6' "),
+                      help=("The roll comand takes 'N * (roll)' format."
+                            " eg like '2 * 4 d10 > 6' and displays the results"
+                            "of the dice rolls with details "),
+                      cog="Classic")
     async def mroll(self, ctx, *, dice_pars):
 
         number_of_rolls = int(dice_pars.split('*')[0])
         regular_input = dice_pars.split('*')[1]
 
         for n in range(number_of_rolls):
-            messages = roll_dices(
-                regular_input, roll_functions, output_configuration).values()
 
-            embed_function = get_proper_embed(output_configuration)
-
-            embed = embed_function(*messages)
+            embed = roll_dices_ref(regular_input)
 
             await ctx.send(embed=embed)
             time.sleep(0.3)
@@ -86,13 +102,16 @@ class Classic(commands.Cog):
     # END OF COMMAND ROLL
 
     # Command Roll for damage
-    @commands.command(aliases=['.rd', 'rd', 'rdam', 'r_damage', 'r_dano'])
+    @commands.command(aliases=['.rd', 'rd', 'rdam', 'r_damage', 'r_dano'],
+                      brief=("Use as 'X d Y' or 'X d Y > z'"
+                             "like '2 * 4 d10 > 6' "),
+                      help=("The roll comand takes 'N * (roll)' format."
+                            " eg like '2 * 4 d10 > 6' and displays the results"
+                            "of the dice rolls for damage with details "),
+                      cog="Classic")
     async def roll_damage(self, ctx, *, dice_pars):
 
-        messages = roll_damage(dice_pars, roll_functions).values()
-
-        embed_function = get_proper_embed(output_configuration)
-        embed = embed_function(*messages)
+        embed = roll_damage_ref(dice_pars)
 
         await ctx.send(embed=embed)
 
